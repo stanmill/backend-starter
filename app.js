@@ -2,12 +2,30 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const models = require('./models');
 
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
+const passport = require('./middlewares/auth');
+
 const PORT = process.env.PORT || 8000;
 
 const app = express();
 
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cookieParser());
+
+app.use(expressSession(({
+  secret: 'keyboard cat - REPLACE ME WITH A BETTER SECRET',
+  resave: false,
+  saveUninitialized: true,
+})));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // Uncomment the following if you want to serve up static assets.
