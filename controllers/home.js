@@ -1,5 +1,7 @@
 const express = require('express');
 const models = require('../models');
+const passport = require('../middlewares/auth');
+
 
 const router = express.Router();
 const User = models.User;
